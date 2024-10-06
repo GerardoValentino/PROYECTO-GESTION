@@ -1,20 +1,92 @@
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-// Datos del nuevo carro que deseas agregar
-/*
-const newCar = {
-    make: 'Toyota',
-    model: 'Corolla 2020',
-    oilFilter: ['TOY-1234'],
-    airFilter: ['TOY-5678'],
-    fuelFilter: ['TOY-9012'],
-    sparkPlug: ['TOY-3456'],
-    sparkPlugWires: ['TOY-7890'],
-    battery: ['TOY-123'],
-    oil: ['5w/30'],
-}; */
+//  ================================ DATA TABLE
+let dataTable;
+let isDataTable = false;
+
+const dataTableOptions = {
+    scrollX: "1300px",
+    pageLength: 3,
+    destroy: true,
+    columnDefs: [
+        { className: "centered", targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
+        { orderable: false, targets: 10 },
+        { searchable: false, targets: 1 },
+        { width: "30%", targets: 10 },
+    ],
+    language: {
+        lengthMenu: "Mostrar _MENU_ registros por página",
+        zeroRecords: "Ningun carro encontrado",
+        info: "Mostrando de _START_ a _END_ de un total de _TOTAL_ registros",
+        infoEmpty: "Ningún carro encontrado",
+        infoFiltered: "(filtrados desde _MAX_ registros totales)",
+        search: "Buscar:",
+        loadingRecords: "Cargando...",
+        paginate: {
+            first: "Primero",
+            last: "Último",
+            next: "Siguiente",
+            previous: "Anterior"
+        }
+    }
+}
+
+const listItems = async () => {
+    try {
+        const response = await fetch("http://127.0.0.1:3000/api/cars");
+        const data = await response.json();
+        //console.log(data);
+
+        let content = ``;
+        data.forEach((car, index) => {
+            content += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${car.make}</td>
+                    <td>${car.model}</td>
+                    <td>${car.oilFilter}</td>
+                    <td>${car.airFilter}</td>
+                    <td>${car.fuelFilter}</td>
+                    <td>${car.sparkPlug}</td>
+                    <td>${car.sparkPlugWires}</td>
+                    <td>${car.battery}</td>
+                    <td>${car.oil}</td>
+                    <td>
+                        <i class="fa-solid fa-trash" style="color: red"></i>
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </td>
+                </tr>
+            `;
+        });
+        tableBody_cars.innerHTML = content;
+
+    } catch(error) {
+        alert(error);
+    }
+}
+
+const initDatatable = async () => {
+    if(isDataTable) dataTable.destroy();
+
+    await listItems();
+
+    dataTable = $("#datatable_cars").DataTable(dataTableOptions);
+    isDataTable = true;
+}
+
+window.addEventListener("load", async () => {
+    await initDatatable();
+});
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -63,3 +135,4 @@ const deleteCar = async (id) => {
 
 //addCar(newCar);
 //deleteCar(12);
+

@@ -1,0 +1,19 @@
+.centered {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+tbody td:last-child {
+    display: flex;
+    gap: 20px;
+}
+
+tbody td i {
+    cursor: pointer;
+    font-size: 25px;
+    transition: transform 0.2s ease-in-out;
+}
+
+tbody td i:hover {
+    transform: scale(1.2);
+}

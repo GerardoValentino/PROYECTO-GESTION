@@ -9,7 +9,6 @@
   "author": "Gerardo Valentino",
   "license": "ISC",
   "dependencies": {
-    "bootstrap": "^5.2.3",
     "cors": "^2.8.5",
     "express": "^4.21.0"
   }

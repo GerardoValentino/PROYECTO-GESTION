@@ -4,11 +4,160 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="style.css">
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+
+    <!--DataTable-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.min.css">
+
+    <!--FontAwesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
-    <button class="btn btn-success">Boton de prueba</button>
-    
+    <div class="container my-4">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Agregar Registro
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Agregar Registro</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="carForm">
+                        <div class="mb-3">
+                            <label for="make" class="form-label">Marca</label>
+                            <input type="text" class="form-control" id="make" name="make" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="model" class="form-label">Modelo</label>
+                            <input type="text" class="form-control" id="model" name="model" required>
+                        </div>
+                        
+                        <!-- Campos dinámicos para Filtro de Aceite -->
+                        <div class="mb-3">
+                            <label class="form-label">Filtro de Aceite</label>
+                            <div id="oilFilterContainer">
+                                <input type="text" class="form-control mb-2" name="oilFilter[]">
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="addField('oilFilterContainer', 'oilFilter[]')">Agregar Filtro de Aceite</button>
+                        </div>
+                
+                        <!-- Campos dinámicos para Filtro de Aire -->
+                        <div class="mb-3">
+                            <label class="form-label">Filtro de Aire</label>
+                            <div id="airFilterContainer">
+                                <input type="text" class="form-control mb-2" name="airFilter[]">
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="addField('airFilterContainer', 'airFilter[]')">Agregar Filtro de Aire</button>
+                        </div>
+                
+                        <!-- Campos dinámicos para Filtro de Combustible -->
+                        <div class="mb-3">
+                            <label class="form-label">Filtro de Combustible</label>
+                            <div id="fuelFilterContainer">
+                                <input type="text" class="form-control mb-2" name="fuelFilter[]">
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="addField('fuelFilterContainer', 'fuelFilter[]')">Agregar Filtro de Combustible</button>
+                        </div>
+                
+                        <!-- Campos dinámicos para Bujía -->
+                        <div class="mb-3">
+                            <label class="form-label">Bujía</label>
+                            <div id="sparkPlugContainer">
+                                <input type="text" class="form-control mb-2" name="sparkPlug[]">
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="addField('sparkPlugContainer', 'sparkPlug[]')">Agregar Bujía</button>
+                        </div>
+                
+                        <!-- Campos dinámicos para Cables de Bujía -->
+                        <div class="mb-3">
+                            <label class="form-label">Cables de Bujía</label>
+                            <div id="sparkPlugWiresContainer">
+                                <input type="text" class="form-control mb-2" name="sparkPlugWires[]">
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="addField('sparkPlugWiresContainer', 'sparkPlugWires[]')">Agregar Cables de Bujía</button>
+                        </div>
+                
+                        <!-- Campos dinámicos para Batería -->
+                        <div class="mb-3">
+                            <label class="form-label">Batería</label>
+                            <div id="batteryContainer">
+                                <input type="text" class="form-control mb-2" name="battery[]">
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="addField('batteryContainer', 'battery[]')">Agregar Batería</button>
+                        </div>
+                
+                        <!-- Campos dinámicos para Aceite -->
+                        <div class="mb-3">
+                            <label class="form-label">Aceite</label>
+                            <div id="oilContainer">
+                                <input type="text" class="form-control mb-2" name="oil[]">
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="addField('oilContainer', 'oil[]')">Agregar Aceite</button>
+                        </div>
+                
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+  
+          
+  
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <table id="datatable_cars" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="centered">#</th>
+                            <th class="centered">Marca</th>
+                            <th class="centered">Modelo</th>
+                            <th class="centered">Filtro de Aceite</th>
+                            <th class="centered">Filtro de Aire</th>
+                            <th class="centered">Filtro de Gasolina</th>
+                            <th class="centered">Bujias</th>
+                            <th class="centered">Cables de Bujias</th>
+                            <th class="centered">Batería</th>
+                            <th class="centered">Aceite</th>
+                            <th class="centered">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody_cars" ></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!--Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+    <!--JQuery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!--DataTable-->
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.min.js"></script>
+
     <script type="module" src="app.js"></script>
 </body>
 </html>

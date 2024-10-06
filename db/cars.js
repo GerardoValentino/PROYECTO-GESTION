@@ -1,4 +1,4 @@
-export const cars = [
+const cars = [
     {   
         id: 1, 
         make: 'Chevrolet', 
@@ -132,3 +132,5 @@ export const cars = [
         oil: ['15w/40']
     },
 ];
+
+module.exports = cars;
