@@ -134,3 +134,20 @@ const cars = [
 ];
 
 module.exports = cars;
+
+/*
+{   
+    id: 11,
+    make: 'Volkswagen', 
+    model: 'JETTA  1993-2002. MOTOR 1.8(4 CIL).', 
+    oilFilter: ['LTH-28'], 
+    airFilter: ['F-74A31', 'GAVEO-121'], 
+    fuelFilter: ['RFG-028'], 
+    sparkPlug: ['BKR5EGP'], 
+    sparkPlugWires: ['0986MG0307(BOSCH)'], 
+    battery: ['L-47LN', 'L42/500'], 
+    oil: ['15w/40']
+},
+
+
+*/

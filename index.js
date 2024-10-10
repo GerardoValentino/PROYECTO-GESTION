@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
     res.send('Node js API');
 });
 
-
+// Busqueda por ID
 app.get('/api/cars/:id', (req, res) => {
     const car = cars.find(c => c.id === parseInt(req.params.id));
 
@@ -21,6 +21,30 @@ app.get('/api/cars/:id', (req, res) => {
         res.send(car);
     }
 });
+
+// Busqueda por varios criterios
+app.get('/api/cars', (req, res) => {
+    const { make, model } = req.query;
+
+    console.log(model);
+
+    let filteredCars = cars;
+
+    if (make) {
+        filteredCars = filteredCars.filter(c => c.make.toLowerCase().includes(make.toLowerCase()));
+    }
+
+    if (model) {
+        filteredCars = filteredCars.filter(c => c.model.toLowerCase().includes(model.toLowerCase()));
+    }
+
+    if (filteredCars.length === 0) {
+        res.status(404).send('No se encontraron carros que coincidan con los criterios de búsqueda');
+    } else {
+        res.send(filteredCars);
+    }
+});
+
 
 app.get('/api/cars', (req, res) => {
     res.send(cars);

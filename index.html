@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Nombre de la empresa aqui</title>
     <!--Custom CSS-->
     <link rel="stylesheet" href="style.css">
     <!--Bootstrap-->
@@ -46,63 +46,63 @@
                         <div class="mb-3">
                             <label class="form-label">Filtro de Aceite</label>
                             <div id="oilFilterContainer">
-                                <input type="text" class="form-control mb-2" name="oilFilter[]">
+                                <input type="text" class="form-control mb-2" name="oilFilter">
                             </div>
-                            <button type="button" class="btn btn-secondary" onclick="addField('oilFilterContainer', 'oilFilter[]')">Agregar Filtro de Aceite</button>
+                            <button type="button" class="btn btn-secondary" onclick="addField('oilFilterContainer', 'oilFilter')">Agregar Filtro de Aceite</button>
                         </div>
                 
                         <!-- Campos dinámicos para Filtro de Aire -->
                         <div class="mb-3">
                             <label class="form-label">Filtro de Aire</label>
                             <div id="airFilterContainer">
-                                <input type="text" class="form-control mb-2" name="airFilter[]">
+                                <input type="text" class="form-control mb-2" name="airFilter">
                             </div>
-                            <button type="button" class="btn btn-secondary" onclick="addField('airFilterContainer', 'airFilter[]')">Agregar Filtro de Aire</button>
+                            <button type="button" class="btn btn-secondary" onclick="addField('airFilterContainer', 'airFilter')">Agregar Filtro de Aire</button>
                         </div>
                 
                         <!-- Campos dinámicos para Filtro de Combustible -->
                         <div class="mb-3">
                             <label class="form-label">Filtro de Combustible</label>
                             <div id="fuelFilterContainer">
-                                <input type="text" class="form-control mb-2" name="fuelFilter[]">
+                                <input type="text" class="form-control mb-2" name="fuelFilter">
                             </div>
-                            <button type="button" class="btn btn-secondary" onclick="addField('fuelFilterContainer', 'fuelFilter[]')">Agregar Filtro de Combustible</button>
+                            <button type="button" class="btn btn-secondary" onclick="addField('fuelFilterContainer', 'fuelFilter')">Agregar Filtro de Combustible</button>
                         </div>
                 
                         <!-- Campos dinámicos para Bujía -->
                         <div class="mb-3">
                             <label class="form-label">Bujía</label>
                             <div id="sparkPlugContainer">
-                                <input type="text" class="form-control mb-2" name="sparkPlug[]">
+                                <input type="text" class="form-control mb-2" name="sparkPlug">
                             </div>
-                            <button type="button" class="btn btn-secondary" onclick="addField('sparkPlugContainer', 'sparkPlug[]')">Agregar Bujía</button>
+                            <button type="button" class="btn btn-secondary" onclick="addField('sparkPlugContainer', 'sparkPlug')">Agregar Bujía</button>
                         </div>
                 
                         <!-- Campos dinámicos para Cables de Bujía -->
                         <div class="mb-3">
                             <label class="form-label">Cables de Bujía</label>
                             <div id="sparkPlugWiresContainer">
-                                <input type="text" class="form-control mb-2" name="sparkPlugWires[]">
+                                <input type="text" class="form-control mb-2" name="sparkPlugWires">
                             </div>
-                            <button type="button" class="btn btn-secondary" onclick="addField('sparkPlugWiresContainer', 'sparkPlugWires[]')">Agregar Cables de Bujía</button>
+                            <button type="button" class="btn btn-secondary" onclick="addField('sparkPlugWiresContainer', 'sparkPlugWires')">Agregar Cables de Bujía</button>
                         </div>
                 
                         <!-- Campos dinámicos para Batería -->
                         <div class="mb-3">
                             <label class="form-label">Batería</label>
                             <div id="batteryContainer">
-                                <input type="text" class="form-control mb-2" name="battery[]">
+                                <input type="text" class="form-control mb-2" name="battery">
                             </div>
-                            <button type="button" class="btn btn-secondary" onclick="addField('batteryContainer', 'battery[]')">Agregar Batería</button>
+                            <button type="button" class="btn btn-secondary" onclick="addField('batteryContainer', 'battery')">Agregar Batería</button>
                         </div>
                 
                         <!-- Campos dinámicos para Aceite -->
                         <div class="mb-3">
                             <label class="form-label">Aceite</label>
                             <div id="oilContainer">
-                                <input type="text" class="form-control mb-2" name="oil[]">
+                                <input type="text" class="form-control mb-2" name="oil">
                             </div>
-                            <button type="button" class="btn btn-secondary" onclick="addField('oilContainer', 'oil[]')">Agregar Aceite</button>
+                            <button type="button" class="btn btn-secondary" onclick="addField('oilContainer', 'oil')">Agregar Aceite</button>
                         </div>
                 
                         <button type="submit" class="btn btn-primary">Enviar</button>
@@ -115,8 +115,6 @@
             </div>
             </div>
         </div>
-  
-          
   
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -142,12 +140,6 @@
         </div>
     </div>
 
-
-
-
-
-
-
     <!--Bootstrap-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
@@ -158,6 +150,10 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.min.js"></script>
 
-    <script type="module" src="app.js"></script>
+    <!--SweetAlert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!--Script-->
+    <script src="app.js" defer></script>
 </body>
 </html>
