@@ -71,14 +71,14 @@ const listItems = async () => {
                     <td>${car.oil}</td>
                     <td>
                         <i class="fa-solid fa-trash btn-delete" style="color: red" data-id="${car.id}"></i>
-                        <i class="fa-solid fa-pen-to-square btn-edit" data-id="${car.id}"></i>
+                        <i class="fa-solid fa-pen-to-square btn-edit" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-id="${car.id}"></i>
                     </td>
                 </tr>
             `;
         });
         tableBody_cars.innerHTML = content;
 
-        // Aplicamos delegación de eventos OSIOSI
+        // Aplicamos delegación de eventos OSIOSI :D
         tableBody_cars.addEventListener('click', (e) => {
             if (e.target.classList.contains('btn-delete')) {
                 Swal.fire({
@@ -92,12 +92,16 @@ const listItems = async () => {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         deleteItem(e);
+                        setTimeout(function() {
+                            location.reload();
+                            
+                        }, 2000);
                     }
                 })
             }
             if (e.target.classList.contains('btn-edit')) {
                 console.log(e.target);
-                alert("Diste click en editar");
+                //alert("Diste click en editar");
             }
         });
 
@@ -154,9 +158,14 @@ function addField(containerId, fieldName) {
 document.getElementById('carForm').addEventListener('submit', async function(e) {
     e.preventDefault(); 
 
+    const form = e.target;
     // Capturar los valores del formulario
     const formData = new FormData(this);
     const carData = {};
+
+    if(!formData.get("make") || !formData.get("model")) {
+        e.preventDefault();
+    }
 
     // Convertir FormData en un objeto JSON
     formData.forEach((value, key) => {
@@ -169,27 +178,26 @@ document.getElementById('carForm').addEventListener('submit', async function(e) 
             carData[key].push(value.toUpperCase());
         }
     });
-
-    //console.log(carData);
-
     
     try {
-
-        // NOTE: Validar si ya existe el registro o no
-        const validateRegister = await fetch(`http://127.0.0.1:3000/api/cars?model=${encodeURIComponent(carData.model.trim())}`);
-        if (validateRegister.ok) {
-            const cars = await validateRegister.json();
-            console.log(cars); 
+        const responseSearch = await fetch(`http://127.0.0.1:3000/api/cars?model=${encodeURIComponent(carData.model.trim())}`);
+        if (responseSearch.ok) {
+            const cars = await responseSearch.json();
+            console.log(cars);
 
             if (cars.length > 0) {
-                // Mostrar detalles de los carros encontrados
-                let result = cars.map(car => `Marca: ${car.make}, Modelo: ${car.model}`).join('\n');
-                Swal.fire('Carros Encontrados', result, 'success');
+                Swal.fire({
+                    position: "center",
+                    icon: "warning",
+                    title: "Este modelo ya ha sido registrado!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return;
             }
         } else {
-            Swal.fire('Error', 'No se encontraron carros que coincidan con los criterios de búsqueda', 'error');
+            console.log('No se encontraron carros que coincidan con los criterios de búsqueda');
         }
-        
 
         const response = await fetch('http://127.0.0.1:3000/api/cars', {
             method: 'POST',
@@ -199,102 +207,28 @@ document.getElementById('carForm').addEventListener('submit', async function(e) 
             body: JSON.stringify(carData)
         });
 
-        if (response.ok) {
-            // Cerrar el modal si el envío es exitoso
+        if (response.ok) {            
             const modal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
             modal.hide();
 
             Swal.fire('Éxito', 'El carro ha sido agregado correctamente', 'success');
-
-            // Recargar o actualizar la tabla con el nuevo registro
             await listItems();
+
+            form.reset();
+            setTimeout(function() {
+                location.reload();
+                
+            }, 2000);
         } else {
-            Swal.fire('Error', 'No se pudo agregar el carro', 'error');
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "No se pudo agregar el carro...",
+                showConfirmButton: false,
+                timer: 1500
+            });
         }
     } catch (error) {
-        Swal.fire('Error', 'Hubo un problema al agregar el carro', 'error');
+        console.log(error);
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Función para agregar un nuevo carro
-async function addCar(car) {
-    try {
-        const response = await fetch('http://127.0.0.1:3000/api/cars', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json', // Tipo de contenido
-            },
-            body: JSON.stringify(car), // Datos del carro en formato JSON
-        });
-
-        if (response.ok) {
-            const addedCar = await response.json();
-            console.log('Carro agregado:', addedCar);
-        } else {
-            alert('Error al agregar el carro');
-            console.error('Error al agregar el carro:', response.statusText);
-        }
-    } catch (error) {
-        console.error('Error 💀💀:', error);
-    }
-}
-
-// Funcion para eliminar un carro
-const deleteCar = async (id) => {
-    try {
-        const response = await fetch(`http://127.0.0.1:3000/api/cars/${id}`, {
-            method: 'DELETE',
-        });
-
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Error al eliminar el carro 😟:', response.statusText, errorText);
-            return;
-        }
-
-        const deletedCar = await response.json();
-        console.log('Carro eliminado:', deletedCar);
-    } catch (error) {
-        console.error('Error:', error);
-    }
-};
-
-//addCar(newCar);
-//deleteCar(12);
-

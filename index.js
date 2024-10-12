@@ -78,5 +78,32 @@ app.delete('/api/cars/:id', (req, res) => {
     res.send(car);
 });
 
+// Actualizar registro
+app.put('/api/cars/:id', (req, res) => {
+    const carId = parseInt(req.params.id);
+    const carIndex = cars.findIndex(c => c.id === carId);
+
+    if (carIndex === -1) {
+        return res.status(404).send('Carro no encontrado');
+    }
+
+    const updatedCar = {
+        id: carId, 
+        make: req.body.make || cars[carIndex].make, 
+        model: req.body.model || cars[carIndex].model,
+        oilFilter: req.body.oilFilter || cars[carIndex].oilFilter, 
+        airFilter: req.body.airFilter || cars[carIndex].airFilter, 
+        fuelFilter: req.body.fuelFilter || cars[carIndex].fuelFilter, 
+        sparkPlug: req.body.sparkPlug || cars[carIndex].sparkPlug, 
+        sparkPlugWires: req.body.sparkPlugWires || cars[carIndex].sparkPlugWires, 
+        battery: req.body.battery || cars[carIndex].battery, 
+        oil: req.body.oil || cars[carIndex].oil 
+    };
+
+    // Actualizar el registro en la base de datos (aquí sería un array en memoria, pero en una BD real sería una operación de actualización)
+    cars[carIndex] = updatedCar;
+    res.send(updatedCar);
+});
+
 const port = process.env.port || 3000;
 app.listen(port, () => console.log(`Escuchando en puerto ${port}...`));
