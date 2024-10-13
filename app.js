@@ -49,6 +49,17 @@ const deleteItem = async (e) => {
 }
 
 
+const modalTitle = document.getElementById('staticBackdropLabel');
+let isEditing = false;
+let currentCarId = null;
+
+document.querySelector('button[data-bs-target="#staticBackdrop"]').addEventListener('click', () => {
+    modalTitle.textContent = 'Agregar Registro';
+    document.getElementById('carForm').reset();
+    isEditing = false;
+    currentCarId = null;
+});
+
 const listItems = async () => {
     try {
         const response = await fetch("http://127.0.0.1:3000/api/cars");
@@ -79,7 +90,7 @@ const listItems = async () => {
         tableBody_cars.innerHTML = content;
 
         // Aplicamos delegación de eventos OSIOSI :D
-        tableBody_cars.addEventListener('click', (e) => {
+        tableBody_cars.addEventListener('click', async (e) => {
             if (e.target.classList.contains('btn-delete')) {
                 Swal.fire({
                     title: '¿Estás seguro?',
@@ -94,14 +105,36 @@ const listItems = async () => {
                         deleteItem(e);
                         setTimeout(function() {
                             location.reload();
-                            
-                        }, 2000);
+                        }, 1500);
                     }
                 })
             }
             if (e.target.classList.contains('btn-edit')) {
-                console.log(e.target);
-                //alert("Diste click en editar");
+                const carId = e.target.getAttribute('data-id');
+                currentCarId = carId;
+                isEditing = true;
+                modalTitle.textContent = 'Editar Registro';
+
+                try {
+                    const response = await fetch(`http://127.0.0.1:3000/api/cars/${carId}`);
+                
+                    if(response.ok) {
+                        const car = await response.json();
+                        document.getElementById('make').value = car.make;
+                        document.getElementById('model').value = car.model;
+                        document.querySelector('input[name="oilFilter"]').value = car.oilFilter;
+                        document.querySelector('input[name="airFilter"]').value = car.airFilter;
+                        document.querySelector('input[name="fuelFilter"]').value = car.fuelFilter;
+                        document.querySelector('input[name="sparkPlug"]').value = car.sparkPlug;
+                        document.querySelector('input[name="sparkPlugWires"]').value = car.sparkPlugWires;
+                        document.querySelector('input[name="battery"]').value = car.battery;
+                        document.querySelector('input[name="oil"]').value = car.oil;
+                    } else {
+                        console.log('No se pudo obtener los detalles del carro (boton editar)');
+                    }
+                } catch(error) {
+                    console.log(error);
+                }
             }
         });
 
@@ -150,16 +183,14 @@ function addField(containerId, fieldName) {
     inputGroup.appendChild(input);
     inputGroup.appendChild(button);
 
-    // Agregar el grupo de inputs al contenedor principal
     container.appendChild(inputGroup);
 }
 
-// Funcion para capturar el formulario y enviar los datos a la API
+// Agregar un nuevo registro o editar un registro
 document.getElementById('carForm').addEventListener('submit', async function(e) {
     e.preventDefault(); 
 
     const form = e.target;
-    // Capturar los valores del formulario
     const formData = new FormData(this);
     const carData = {};
 
@@ -167,7 +198,6 @@ document.getElementById('carForm').addEventListener('submit', async function(e) 
         e.preventDefault();
     }
 
-    // Convertir FormData en un objeto JSON
     formData.forEach((value, key) => {
         if (!carData[key]) {
             carData[key] = value.toUpperCase();
@@ -180,53 +210,84 @@ document.getElementById('carForm').addEventListener('submit', async function(e) 
     });
     
     try {
-        const responseSearch = await fetch(`http://127.0.0.1:3000/api/cars?model=${encodeURIComponent(carData.model.trim())}`);
-        if (responseSearch.ok) {
-            const cars = await responseSearch.json();
-            console.log(cars);
+        if(isEditing) {
+            const response = await fetch(`http://127.0.0.1:3000/api/cars/${currentCarId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(carData)
+            });
 
-            if (cars.length > 0) {
+            if(response.ok) {
                 Swal.fire({
                     position: "center",
-                    icon: "warning",
-                    title: "Este modelo ya ha sido registrado!",
+                    icon: "success",
+                    title: "El registro ha sido actualizado correctamente!",
                     showConfirmButton: false,
                     timer: 1500
                 });
-                return;
+
+                form.reset();
+                setTimeout(() => location.reload(), 1500);
+            } else {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Hubo un problema al actualizar el registro!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             }
         } else {
-            console.log('No se encontraron carros que coincidan con los criterios de búsqueda');
-        }
-
-        const response = await fetch('http://127.0.0.1:3000/api/cars', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(carData)
-        });
-
-        if (response.ok) {            
-            const modal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
-            modal.hide();
-
-            Swal.fire('Éxito', 'El carro ha sido agregado correctamente', 'success');
-            await listItems();
-
-            form.reset();
-            setTimeout(function() {
-                location.reload();
-                
-            }, 2000);
-        } else {
-            Swal.fire({
-                position: "center",
-                icon: "error",
-                title: "No se pudo agregar el carro...",
-                showConfirmButton: false,
-                timer: 1500
+            const responseSearch = await fetch(`http://127.0.0.1:3000/api/cars?model=${encodeURIComponent(carData.model.trim())}`);
+            if (responseSearch.ok) {
+                const cars = await responseSearch.json();
+                console.log(cars);
+    
+                if (cars.length > 0) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "warning",
+                        title: "Este modelo ya ha sido registrado!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    return;
+                }
+            } else {
+                console.log('No se encontraron carros que coincidan con los criterios de búsqueda');
+            }
+    
+            const response = await fetch('http://127.0.0.1:3000/api/cars', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(carData)
             });
+    
+            if (response.ok) {            
+                const modal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
+                modal.hide();
+    
+                Swal.fire('Éxito', 'El carro ha sido agregado correctamente', 'success');
+                await listItems();
+    
+                form.reset();
+                setTimeout(function() {
+                    location.reload();
+                    
+                }, 2000);
+            } else {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "No se pudo agregar el carro...",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
         }
     } catch (error) {
         console.log(error);

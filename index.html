@@ -17,9 +17,9 @@
 
 </head>
 <body>
-    <div class="container my-4">
+    <main class="container my-4">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <button type="button" class="btn-add-register" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             Agregar Registro
         </button>
 
@@ -48,7 +48,7 @@
                             <div id="oilFilterContainer">
                                 <input type="text" class="form-control mb-2" name="oilFilter">
                             </div>
-                            <button type="button" class="btn btn-secondary" onclick="addField('oilFilterContainer', 'oilFilter')">Agregar Filtro de Aceite</button>
+                            <button type="button" class="btn btn-success" onclick="addField('oilFilterContainer', 'oilFilter')">Agregar</button>
                         </div>
                 
                         <!-- Campos dinámicos para Filtro de Aire -->
@@ -57,7 +57,7 @@
                             <div id="airFilterContainer">
                                 <input type="text" class="form-control mb-2" name="airFilter">
                             </div>
-                            <button type="button" class="btn btn-secondary" onclick="addField('airFilterContainer', 'airFilter')">Agregar Filtro de Aire</button>
+                            <button type="button" class="btn btn-success" onclick="addField('airFilterContainer', 'airFilter')">Agregar</button>
                         </div>
                 
                         <!-- Campos dinámicos para Filtro de Combustible -->
@@ -66,7 +66,7 @@
                             <div id="fuelFilterContainer">
                                 <input type="text" class="form-control mb-2" name="fuelFilter">
                             </div>
-                            <button type="button" class="btn btn-secondary" onclick="addField('fuelFilterContainer', 'fuelFilter')">Agregar Filtro de Combustible</button>
+                            <button type="button" class="btn btn-success" onclick="addField('fuelFilterContainer', 'fuelFilter')">Agregar</button>
                         </div>
                 
                         <!-- Campos dinámicos para Bujía -->
@@ -75,7 +75,7 @@
                             <div id="sparkPlugContainer">
                                 <input type="text" class="form-control mb-2" name="sparkPlug">
                             </div>
-                            <button type="button" class="btn btn-secondary" onclick="addField('sparkPlugContainer', 'sparkPlug')">Agregar Bujía</button>
+                            <button type="button" class="btn btn-success" onclick="addField('sparkPlugContainer', 'sparkPlug')">Agregar</button>
                         </div>
                 
                         <!-- Campos dinámicos para Cables de Bujía -->
@@ -84,7 +84,7 @@
                             <div id="sparkPlugWiresContainer">
                                 <input type="text" class="form-control mb-2" name="sparkPlugWires">
                             </div>
-                            <button type="button" class="btn btn-secondary" onclick="addField('sparkPlugWiresContainer', 'sparkPlugWires')">Agregar Cables de Bujía</button>
+                            <button type="button" class="btn btn-success" onclick="addField('sparkPlugWiresContainer', 'sparkPlugWires')">Agregar</button>
                         </div>
                 
                         <!-- Campos dinámicos para Batería -->
@@ -93,7 +93,7 @@
                             <div id="batteryContainer">
                                 <input type="text" class="form-control mb-2" name="battery">
                             </div>
-                            <button type="button" class="btn btn-secondary" onclick="addField('batteryContainer', 'battery')">Agregar Batería</button>
+                            <button type="button" class="btn btn-success" onclick="addField('batteryContainer', 'battery')">Agregar</button>
                         </div>
                 
                         <!-- Campos dinámicos para Aceite -->
@@ -102,7 +102,7 @@
                             <div id="oilContainer">
                                 <input type="text" class="form-control mb-2" name="oil">
                             </div>
-                            <button type="button" class="btn btn-secondary" onclick="addField('oilContainer', 'oil')">Agregar Aceite</button>
+                            <button type="button" class="btn btn-success" onclick="addField('oilContainer', 'oil')">Agregar</button>
                         </div>
                         
                         <div class="modal-footer">
@@ -138,7 +138,11 @@
                 </table>
             </div>
         </div>
-    </div>
+    </main>
+
+    <footer>
+        &copy; Todos los derechos reservados 2024
+    </footer>
 
     <!--Bootstrap-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

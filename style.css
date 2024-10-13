@@ -3,6 +3,22 @@
     vertical-align: middle !important;
 }
 
+.btn-add-register {
+    background-color: #FF3131;
+    border: none;
+    border-radius: 7px;
+    padding: 8px;
+    color: white;
+    font-weight: 600;
+    font-size: 17px;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-add-register:hover {
+    transform: scale(1.05);
+}
+
+
 tbody td:last-child {
     display: flex;
     gap: 20px;
