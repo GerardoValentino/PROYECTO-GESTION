@@ -115,6 +115,7 @@ const listItems = async () => {
                 isEditing = true;
                 modalTitle.textContent = 'Editar Registro';
 
+                // NOTE: Falta validar que no se introduzca un modelo que ya existe en la db
                 try {
                     const response = await fetch(`http://127.0.0.1:3000/api/cars/${carId}`);
                 
@@ -243,7 +244,6 @@ document.getElementById('carForm').addEventListener('submit', async function(e) 
             const responseSearch = await fetch(`http://127.0.0.1:3000/api/cars?model=${encodeURIComponent(carData.model.trim())}`);
             if (responseSearch.ok) {
                 const cars = await responseSearch.json();
-                console.log(cars);
     
                 if (cars.length > 0) {
                     Swal.fire({

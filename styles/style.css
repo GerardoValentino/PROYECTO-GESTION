@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+:root {
+    --mainFont: "Bebas Neue", sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    height: 20vh;
+    background-color: #FF3131;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+header p {
+    font-family: var(--mainFont);
+    font-weight: 600;
+    font-style: normal;
+    font-size: 60px;
+}
+
+header p span {
+    font-family: var(--mainFont);
+    font-weight: 200;
+    font-style: normal;
+    font-size: 40px;
+    color: #fff;
+}
+
+header p:hover {
+    cursor: pointer;
+}
+
+header nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+header nav ul li {
+    margin-right: 20px;
+}
+
+header nav ul li a {
+    font-family: var(--mainFont);
+    color: #fff;
+    text-decoration: none;
+    font-size: 28px;
+    transition: all 0.5 ease-in-out;
+}
+
+header nav ul li a:hover {
+    color: #000;
+}
+
+.centered {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.btn-add-register {
+    background-color: #FF3131;
+    border: none;
+    border-radius: 7px;
+    padding: 8px;
+    color: white;
+    font-weight: 600;
+    font-size: 17px;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-add-register:hover {
+    transform: scale(1.05);
+}
+
+
+tbody td:last-child {
+    display: flex;
+    gap: 20px;
+}
+
+tbody td i {
+    cursor: pointer;
+    font-size: 25px;
+    transition: transform 0.2s ease-in-out;
+}
+
+tbody td i:hover {
+    transform: scale(1.2);
+}
+
+footer {
+    position: relative;
+    width: 100%;
+    background: #073876;
+    min-height: 100px;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 200px;
+}
+
+footer .social_icon, footer .menu
+ {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+
+footer .social_icon li, footer .menu li{
+    list-style: none;
+}
+
+footer .social_icon li a {
+    font-size: 2em;
+    color: #fff;
+    margin: 0 10px;
+    display: inline-block;
+    transition: 0.5s;
+}
+
+footer .social_icon li a:hover {
+    transform: translate(-10px);
+}
+
+footer .menu li a {
+    font-size: 1.2em;
+    color: #fff;
+    margin: 0 10px;
+    display: inline-block;
+    text-decoration: none;
+    opacity: 0.75;
+}
+
+footer .menu li a:hover {
+    opacity: 1;
+}
+
+footer p {
+    color: #fff;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+footer .wave {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url(../img/wave.png);
+    background-size: 1000px 100px;
+}
+
+footer .wave#wave1 {
+    z-index: 1000;
+    opacity: 1;
+    bottom: 0;
+    animation: animateWave 4s linear infinite;
+}
+
+footer .wave#wave2 {
+    z-index: 999;
+    opacity: 0.5;
+    bottom: 10px;
+    animation: animateWave_02 4s linear infinite;
+}
+
+footer .wave#wave3 {
+    z-index: 1000;
+    opacity: 0.2;
+    bottom: 15px;
+    animation: animateWave 3s linear infinite;
+}
+
+footer .wave#wave4 {
+    z-index: 999;
+    opacity: 0.7;
+    bottom: 20px;
+    animation: animateWave_02 3s linear infinite;
+}
+
+@keyframes animateWave {
+    0% {
+        background-position-x: 1000px;
+    }
+    100% {
+        background-position-x: 0px;
+    }
+}
+@keyframes animateWave_02 {
+    0% {
+        background-position-x: 0px;
+    }
+    100% {
+        background-position-x: 1000px;
+    }
+}

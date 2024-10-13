@@ -1,4 +1,4 @@
-const cars = require('./db/cars');
+const cars = require('../db/cars');
 const express = require('express');
 const cors = require('cors');
 const app = express();
